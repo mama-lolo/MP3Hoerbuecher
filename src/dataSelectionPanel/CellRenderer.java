@@ -27,4 +27,7 @@ public class CellRenderer extends DefaultListCellRenderer{
         return label;
 
     }
+    public void updatePath(String newPath){
+    	rootPath = newPath;
+    }
 }

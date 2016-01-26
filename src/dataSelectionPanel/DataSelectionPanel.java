@@ -40,6 +40,7 @@ public class DataSelectionPanel extends JPanel {
 	public void updatePath(String path){
 		System.out.println("DataSelectionPanel updated with path: "+path);
 		model.removeAllElements();
+		list.setCellRenderer(new CellRenderer(path));
 		File temp = new File(path);
 		for(File f :temp.listFiles()){
 			model.addElement(f);
