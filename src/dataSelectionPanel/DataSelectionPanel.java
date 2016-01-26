@@ -3,6 +3,7 @@ package dataSelectionPanel;
 
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.File;
 
 import javax.swing.DefaultListModel;
@@ -26,14 +27,18 @@ public class DataSelectionPanel extends JPanel {
 	public DataSelectionPanel(String rootPath){
 		super();
 
+		//Visual presets for the panel
+		this.setPreferredSize(new Dimension(500, 700));
 		//implementing SelectionModel
 		ListSelectionModel selModel = list.getSelectionModel();
 		selModel.addListSelectionListener(selectionHandler);
 		
 		//Sets CellRenderer for adapted display
 		list.setCellRenderer(new CellRenderer(rootPath));
-		
+		//visual presets for the scrollpane
+		scroller.setPreferredSize(new Dimension(400, 700));
 		this.add(scroller, BorderLayout.CENTER);
+		//necessary Graphical updates
 		this.revalidate();
 		this.setVisible(true);
 	}
