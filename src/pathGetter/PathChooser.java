@@ -11,7 +11,7 @@ public class PathChooser{
 		fc = new JFileChooser();
 		fc.getAcceptAllFileFilter();
 		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		int returnVal = fc.showOpenDialog(ComponentStorage.MAIN_FRAME);
+		int returnVal = fc.showOpenDialog(ComponentStorage.MAIN_FRAME.frame1);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				String path = fc.getSelectedFile().toString();
 				System.out.println("Selected path: "+path);
