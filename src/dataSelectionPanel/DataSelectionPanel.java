@@ -77,7 +77,7 @@ public class DataSelectionPanel extends JPanel {
 			}
 		}});
 		// visual presets for the scrollpane
-		scroller.setPreferredSize(new Dimension(400, 700));
+		scroller.setPreferredSize(new Dimension(400, 600));
 		this.add(scroller, BorderLayout.CENTER);
 		// necessary Graphical updates
 		this.revalidate();
