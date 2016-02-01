@@ -2,6 +2,8 @@ package dataSelectionPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.DefaultListModel;
@@ -35,6 +37,45 @@ public class DataSelectionPanel extends JPanel {
 
 		// Sets CellRenderer for adapted display
 		list.setCellRenderer(new CellRenderer(rootPath));
+		//adds the abillity to open subfolders
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent evt){
+				int index = 0;
+				JList list = (JList) evt.getSource();
+				if (evt.getClickCount() == 2) {
+
+					// Double-click detected
+					index = list.locationToIndex(evt.getPoint());
+					// Unterordner öffnen wenn File ein Ordner ist und nicht bereits geöffnet ist
+					if (model.elementAt(index).isDirectory()
+							&& !model
+									.elementAt((index + 1)%model.getSize())//ArrayIndexOutOfBounds check
+									.getAbsolutePath()
+									.contains(
+											model.elementAt(index)
+													.getAbsolutePath() + "\\")) {
+						File temp = new File(model.elementAt(index)
+								.getAbsolutePath() + "\\");
+						File[] newfiles = temp.listFiles();
+						for (File f : newfiles) {
+							model.add(index + 1, f);
+						}//Unterordner Schließen, wenn er bereits geöffnet war.
+					} else if (model.elementAt(index).isDirectory()) {
+
+						while (model
+								.elementAt((index + 1)%model.getSize())//ArrayIndexOutOfBounds check
+								.getAbsolutePath()
+								.contains(
+										model.elementAt(index)
+												.getAbsolutePath() + "\\")) {
+
+							model.remove(index+1);
+						}
+
+					}
+			}
+		}});
 		// visual presets for the scrollpane
 		scroller.setPreferredSize(new Dimension(400, 700));
 		this.add(scroller, BorderLayout.CENTER);
