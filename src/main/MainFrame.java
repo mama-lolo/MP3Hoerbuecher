@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		// basic setup
 		super("MP3-HoerbuchHandler");
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		contentPane = this.getContentPane();
 
