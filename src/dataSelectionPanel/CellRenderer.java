@@ -32,16 +32,17 @@ public class CellRenderer extends DefaultListCellRenderer {
 
 		String localPath = value.toString().replace(rootPath, "");
 		String[] paths = localPath.split("\\\\");
-		// Adding the blanks for the backslashes(not equally as long but in relation to it)
-		String displayPath = new String(new char[paths.length*2]).replace("\0", " ");
-		// adding the blanks for the rootpath (not equally as long but in relation to it)
+		// Adding the blanks for the backslashes(not equally as long but in
+		// relation to it)
+		String displayPath = new String(new char[paths.length * 2]).replace("\0", " ");
+		// adding the blanks for the rootpath (not equally as long but in
+		// relation to it)
 		for (int i = 0; i < paths.length - 1; i++) {
-			displayPath = displayPath + new String(new char[paths[i].length()*2]).replace("\0", " ");
+			displayPath = displayPath + new String(new char[paths[i].length() * 2]).replace("\0", " ");
 		}
 		// adding the actual name
-		displayPath = displayPath + paths[paths.length-1];
-		JLabel label = (JLabel) super.getListCellRendererComponent(list, displayPath, index,
-				isSelected, cellHasFocus);
+		displayPath = displayPath + paths[paths.length - 1];
+		JLabel label = (JLabel) super.getListCellRendererComponent(list, displayPath, index, isSelected, cellHasFocus);
 		// "value" is whatever object you put into the list, you can use it
 		// however you want here
 		return label;
