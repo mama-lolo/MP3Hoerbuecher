@@ -2,15 +2,20 @@ package dataSelectionPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+
+import main.ComponentStorage;
 
 /**
  * This is the Panel in which the user chooses the data to go through
@@ -24,6 +29,7 @@ public class DataSelectionPanel extends JPanel {
 	public JList<File> list = new JList<File>(model); // Liste mit Strings
 	public JScrollPane scroller = new JScrollPane(list);
 	public SharedListSelectionHandler selectionHandler = new SharedListSelectionHandler();
+	public JButton sortButton = new JButton("Sort");
 
 	// attention this List is created empty!!!
 	public DataSelectionPanel(String rootPath) {
@@ -78,7 +84,15 @@ public class DataSelectionPanel extends JPanel {
 		}});
 		// visual presets for the scrollpane
 		scroller.setPreferredSize(new Dimension(400, 600));
+		
+		//Button setup
+		sortButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				ComponentStorage.MAIN_FRAME.changeView(ComponentStorage.SORTING_PANEL);
+			}
+		});
 		this.add(scroller, BorderLayout.CENTER);
+		this.add(sortButton);
 		// necessary Graphical updates
 		this.revalidate();
 		this.setVisible(true);

@@ -11,6 +11,7 @@ import javax.swing.WindowConstants;
 
 import dataSelectionPanel.DataSelectionPanel;
 import pathGetter.PathChooser;
+import sortingPanel.SortingPanel;
 
 /**
  * This is the actual MainWindow with included JPanels with differing content
@@ -33,15 +34,17 @@ public class MainFrame extends JFrame {
 		this.setResizable(false);
 		contentPane = this.getContentPane();
 
-		// Move Window to center
+		/* Move Window to center
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
 		int y = (d.height - getSize().height) / 2;
-		setLocation(x, y);
+		setLocation(x, y);*/
+		this.setLocation(0,0);
 
 		// initialise the components
 		ComponentStorage.MAIN_FRAME = this;
 		ComponentStorage.DATA_SELECTION_PANEL = new DataSelectionPanel(".");
+		ComponentStorage.SORTING_PANEL = new SortingPanel();
 
 		// Opens new directory view
 		new PathChooser();

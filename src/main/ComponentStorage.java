@@ -1,5 +1,6 @@
 package main;
 
+import sortingPanel.SortingPanel;
 import dataSelectionPanel.DataSelectionPanel;
 
 /**
@@ -10,4 +11,5 @@ import dataSelectionPanel.DataSelectionPanel;
 public class ComponentStorage {
 	public static  MainFrame MAIN_FRAME;
 	public static DataSelectionPanel DATA_SELECTION_PANEL;
+	public static SortingPanel SORTING_PANEL;
 }
