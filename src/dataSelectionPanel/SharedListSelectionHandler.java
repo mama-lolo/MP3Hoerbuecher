@@ -10,13 +10,14 @@ import javax.swing.event.ListSelectionListener;
 /*
  * contains ArrayList selectedIndicies with the selected indicies of the corresponding list
  */
-class SharedListSelectionHandler implements ListSelectionListener {
+public class SharedListSelectionHandler implements ListSelectionListener {
 	public ArrayList<Integer> selectedIndicies = new ArrayList();
 	StringBuffer output = new StringBuffer("");
 
 	private String newline = System.getProperty("line.separator");
 
 	public void valueChanged(ListSelectionEvent e) {
+		selectedIndicies.clear();
 		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
 		int firstIndex = e.getFirstIndex();
@@ -33,12 +34,12 @@ class SharedListSelectionHandler implements ListSelectionListener {
 				int maxIndex = lsm.getMaxSelectionIndex();
 				for (int i = minIndex; i <= maxIndex; i++) {
 					if (lsm.isSelectedIndex(i)) {
-						output.append(" " + i);
+						selectedIndicies.add(i);
 					}
 				}
 			}
-			output.append(newline);
-			System.out.println(output);
+			System.out.print(output);
+			System.out.println(selectedIndicies);
 			output = new StringBuffer();
 		}
 	}

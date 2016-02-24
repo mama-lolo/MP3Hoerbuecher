@@ -65,7 +65,9 @@ public class DataSelectionPanel extends JPanel {
 								.getAbsolutePath() + "\\");
 						File[] newfiles = temp.listFiles();
 						for (File f : newfiles) {
+							if(f.isDirectory()||f.getAbsolutePath().contains(".mp3")||f.getAbsolutePath().contains(".wav")){
 							model.add(index + 1, f);
+							}
 						}//Unterordner Schließen, wenn er bereits geöffnet war.
 					} else if (model.elementAt(index).isDirectory()) {
 
@@ -89,6 +91,7 @@ public class DataSelectionPanel extends JPanel {
 		sortButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				ComponentStorage.MAIN_FRAME.changeView(ComponentStorage.SORTING_PANEL);
+				ComponentStorage.SORTING_PANEL.updateData();
 			}
 		});
 		this.add(scroller, BorderLayout.CENTER);
@@ -111,7 +114,9 @@ public class DataSelectionPanel extends JPanel {
 		list.setCellRenderer(new CellRenderer(path));
 		File temp = new File(path);
 		for (File f : temp.listFiles()) {
+			if(f.isDirectory()||f.getAbsolutePath().contains(".mp3")||f.getAbsolutePath().contains(".wav")){
 			model.addElement(f);
+			}
 		}
 		this.revalidate();
 	}
