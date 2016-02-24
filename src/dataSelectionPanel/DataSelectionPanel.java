@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -30,6 +31,7 @@ public class DataSelectionPanel extends JPanel {
 	public JScrollPane scroller = new JScrollPane(list);
 	public SharedListSelectionHandler selectionHandler = new SharedListSelectionHandler();
 	public JButton sortButton = new JButton("Sort");
+	public ArrayList<Integer> selectedIndicies = new ArrayList();
 
 	// attention this List is created empty!!!
 	public DataSelectionPanel(String rootPath) {
@@ -91,6 +93,7 @@ public class DataSelectionPanel extends JPanel {
 		sortButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				ComponentStorage.MAIN_FRAME.changeView(ComponentStorage.SORTING_PANEL);
+				System.out.println("During component update the activated Indices were: "+selectionHandler.selectedIndicies);
 				ComponentStorage.SORTING_PANEL.updateData();
 			}
 		});

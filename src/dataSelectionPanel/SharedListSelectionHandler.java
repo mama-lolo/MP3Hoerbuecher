@@ -7,6 +7,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import main.ComponentStorage;
+
 /*
  * contains ArrayList selectedIndicies with the selected indicies of the corresponding list
  */
@@ -34,12 +36,11 @@ public class SharedListSelectionHandler implements ListSelectionListener {
 				int maxIndex = lsm.getMaxSelectionIndex();
 				for (int i = minIndex; i <= maxIndex; i++) {
 					if (lsm.isSelectedIndex(i)) {
-						selectedIndicies.add(i);
+						ComponentStorage.DATA_SELECTION_PANEL.selectedIndicies.add(i);
 					}
 				}
 			}
 			System.out.print(output);
-			System.out.println(selectedIndicies);
 			output = new StringBuffer();
 		}
 	}
