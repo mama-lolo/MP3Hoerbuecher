@@ -21,7 +21,7 @@ import sortingPanel.SortingPanel;
  */
 public class MainFrame extends JFrame {
 	// default Path
-	private String path = ".";
+	public String path = ".";
 	// ContentPane
 	private Container contentPane;
 	// pointer to currently visible Component

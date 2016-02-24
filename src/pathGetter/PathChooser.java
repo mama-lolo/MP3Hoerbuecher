@@ -19,7 +19,7 @@ public class PathChooser {
 		int returnVal = fc.showOpenDialog(ComponentStorage.MAIN_FRAME);
 		// check if approved
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			String path = fc.getSelectedFile().toString();
+			String path = fc.getSelectedFile().getAbsolutePath();
 			System.out.println("Selected path: " + path);
 			// update path
 			ComponentStorage.MAIN_FRAME.changePath(path);

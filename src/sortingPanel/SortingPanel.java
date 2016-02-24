@@ -37,7 +37,13 @@ public class SortingPanel extends JPanel {
 		
 		for(File f : mp3Data){
 			String path = f.getAbsolutePath();
-			path.replace(path, "").replace("_", "|").replace("\\", "|").replace(",","|").replace(";","|").replace("/","|").replace("#","|");
+			path.replace(ComponentStorage.MAIN_FRAME.path, "");
+			path.replace("|", "_");
+			path.replace("\\", "|");
+			path.replace(",","|");
+			path.replace(";","|");
+			path.replace("/","|");
+			path.replace("#","|");
 			Vector <String> temporary = new Vector<String>();
 			for(String s : path.split("|")){
 				temporary.add(s);
@@ -47,6 +53,7 @@ public class SortingPanel extends JPanel {
 			columns.add("1");columns.add("1");columns.add("1");columns.add("1");columns.add("1");columns.add("1");columns.add("1");columns.add("1");columns.add("1");
 			dataTable= new JTable(data,columns);
 			revalidate();
+			System.out.println(data);
 		}
 	}
 
