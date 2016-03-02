@@ -14,9 +14,9 @@ import javax.swing.JTable;
 import main.ComponentStorage;
 
 public class SortingPanel extends JPanel {
-	String[][] data = {{""}};
-	String [] name = {""};
-	public JTable dataTable = new JTable(data,name);
+	Vector<Vector<String>> data = new Vector<Vector<String>>();
+	Vector<String> names = new Vector<String>();
+	public JTable dataTable = new JTable(data,names);
 	public JScrollPane scroller = new JScrollPane(dataTable);
 
 	public SortingPanel() {
@@ -57,7 +57,7 @@ public class SortingPanel extends JPanel {
 			ArrayList<String> row = new ArrayList<String>();
 			//creating the List representing the Files name and its data
 			for (String s : path.split("~")) {
-				if (s != null&&s!="") {
+				if (s != null&&s!=""&&s!=" "&&s.length()>=2) {
 					System.out.print("added :" + s + " || ");
 					row.add(s);
 				}
@@ -68,28 +68,30 @@ public class SortingPanel extends JPanel {
 			rows.add(row);
 		}
 		//adding the headers
-		String[] names = new String[longestFile];
-		for(String s : names){
-			s = new String("plese add a title");
+		names = new Vector<String>();
+		for(int i = 0; i<longestFile;i++){
+			names.add(new String("plese add a title"));
 		}
-		//converting the Lists to Object[][]
-		data = new String[rows.size()][longestFile];	
-		for (int i = 0;i<data.length;i++) {
-			for(int j=0;j<data[i].length;j++){
+		//converting to Vectors of Vectors
+		data = new Vector();	
+		for (int i = 0;i<rows.size();i++) {
+			data.add(new Vector<String>());
+			for(int j=0;j<longestFile;j++){
 				try{
 					if(rows.get(i).get(j)!=null&&rows.get(i).get(j)!=""){
-					data[i][j] = rows.get(i).get(j);}else{
-						data[i][j]="";
-					}
+					data.get(i).add( rows.get(i).get(j));}
 				}catch(IndexOutOfBoundsException e ){
-					data[i][j]= new String("");
+					System.out.println("This row was shorter");
 				}
 			}
 		}
-		for(String[] sarray:data){
-		System.out.println(Arrays.toString(sarray));}
+		System.out.println("Datalength: "+data.size()+"|| datasublength: "+data.elementAt(0).size()+"|| namelength: "+names.size());
 		dataTable=new JTable(data,names);
+		dataTable.setVisible(true);
+		scroller.removeAll();
+		scroller.add(dataTable);
 		revalidate();
+		ComponentStorage.MAIN_FRAME.pack();
 		System.out.println(data);
 	}
 
