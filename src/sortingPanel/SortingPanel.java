@@ -14,58 +14,69 @@ import main.ComponentStorage;
 
 public class SortingPanel extends JPanel {
 	Vector<Vector> data = new Vector();
-	public JTable dataTable = new JTable(data,new Vector());
+	public JTable dataTable = new JTable(data, new Vector());
 	public JScrollPane scroller = new JScrollPane(dataTable);
-	public SortingPanel(){
+
+	public SortingPanel() {
 		super();
-		this.add(scroller,BorderLayout.CENTER);
+		this.add(scroller, BorderLayout.CENTER);
 		revalidate();
-		
+
 	}
 
-	//has to be fixed
-	public void updateData(){
-		ArrayList<File> mp3Data = new ArrayList<File>();
+	// has to be fixed
+	public void updateData() {
+		ArrayList<File> mp3readingData = new ArrayList<File>();
+		ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
 		DefaultListModel<File> tempModel = ComponentStorage.DATA_SELECTION_PANEL.model;
 		ArrayList<Integer> activatedIndicies = ComponentStorage.DATA_SELECTION_PANEL.selectedIndicies;
 		System.out.println("Started adding Files to the sortable List.");
-		//inserting the different MP3 Files
-		for(Integer i : activatedIndicies){
-			System.out.println("Added File at pos: "+i);
-			add(tempModel.get(i),mp3Data);
+		// inserting the different MP3 Files
+		for (Integer i : activatedIndicies) {
+			System.out.println("Added File at pos: " + i);
+			add(tempModel.get(i), mp3readingData);
 		}
-		
-		for(File f : mp3Data){
+
+		for (File f : mp3readingData) {
 			String path = f.getAbsolutePath();
-			path.replace(ComponentStorage.MAIN_FRAME.path, "");
-			path.replace("|", "_");
-			path.replace("\\", "|");
-			path.replace(",","|");
-			path.replace(";","|");
-			path.replace("/","|");
-			path.replace("#","|");
-			Vector <String> temporary = new Vector<String>();
-			for(String s : path.split("|")){
-				temporary.add(s);
+			path = path.replace(ComponentStorage.MAIN_FRAME.path, "");
+			System.out.println(ComponentStorage.MAIN_FRAME.path);
+			path = path.replace(".mp3", "");
+			path = path.replace("_", "~");
+			path = path.replace("\\", "~");
+			path = path.replace("-", "~");
+			path = path.replace(";", "~");
+			path = path.replace("/", "~");
+			path = path.replace("#", "~");
+			ArrayList<String> row = new ArrayList<String>();
+			for (String s : path.split("~")) {
+				if (s != null) {
+					System.out.print("added :" + s + " || ");
+					row.add(s);
+				}
 			}
-			data.add(temporary);
-			Vector<String> columns = new Vector();
-			columns.add("1");columns.add("1");columns.add("1");columns.add("1");columns.add("1");columns.add("1");columns.add("1");columns.add("1");columns.add("1");
-			dataTable= new JTable(data,columns);
-			revalidate();
-			System.out.println(data);
+			System.out.println();
+			rows.add(row);
 		}
+
+		Vector<String> columns = new Vector();
+		for (int i = 0; i < data.size(); i++) {
+			columns.add("Spalte: " + i);
+		}
+		dataTable = new JTable(data, columns);
+		revalidate();
+		System.out.println(data);
 	}
 
-
 	private void add(File file, ArrayList<File> mp3Data) {
-		if(file.isDirectory()){
-			for(File f : file.listFiles()){
-				add(f,mp3Data);
+		if (file.isDirectory()) {
+			for (File f : file.listFiles()) {
+				add(f, mp3Data);
 			}
-		}else if(file.getAbsolutePath().contains(".mp3")||file.getAbsolutePath().contains(".wav")){
+		} else if (file.getAbsolutePath().contains(".mp3")
+				|| file.getAbsolutePath().contains(".wav")) {
 			mp3Data.add(file);
 		}
-		
+
 	}
 }
