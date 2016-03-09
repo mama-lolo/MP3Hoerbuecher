@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -18,10 +19,14 @@ public class SortingPanel extends JPanel {
 	Vector<String> names = new Vector<String>();
 	public JTable dataTable = new JTable(data,names);
 	public JScrollPane scroller = new JScrollPane(dataTable);
+	public JButton button = new JButton();
 
 	public SortingPanel() {
 		super();
+		this.setLayout(new BorderLayout());
 		scroller.setVisible(true);
+		button.setVisible(true);
+		this.add(button,BorderLayout.SOUTH);
 		this.add(scroller, BorderLayout.CENTER);
 		revalidate();
 
@@ -85,14 +90,11 @@ public class SortingPanel extends JPanel {
 				}
 			}
 		}
+		
 		System.out.println("Datalength: "+data.size()+"|| datasublength: "+data.elementAt(0).size()+"|| namelength: "+names.size());
 		dataTable=new JTable(data,names);
-		dataTable.setVisible(true);
-		scroller.removeAll();
-		scroller.add(dataTable);
-		revalidate();
+		scroller= new JScrollPane(dataTable);
 		ComponentStorage.MAIN_FRAME.pack();
-		System.out.println(data);
 	}
 
 	private void add(File file, ArrayList<File> mp3Data) {
