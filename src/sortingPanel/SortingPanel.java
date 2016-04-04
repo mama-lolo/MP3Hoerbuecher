@@ -1,9 +1,12 @@
 package sortingPanel;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
@@ -11,23 +14,26 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import org.apache.commons.io.FileUtils;
 
 import main.ComponentStorage;
 
-public class SortingPanel extends JPanel {
+public class SortingPanel extends JPanel implements ActionListener {
 	Vector<Vector<String>> data = new Vector<Vector<String>>();
 	Vector<String> names = new Vector<String>();
 	public JTable dataTable = new JTable(data,names);
 	public JScrollPane scroller = new JScrollPane(dataTable);
-	public JButton button = new JButton();
+	public JButton button = new JButton("Move to new Directory");
+	public ArrayList<File> files = new ArrayList<>();
 
 	public SortingPanel() {
 		super();
 		this.setLayout(new BorderLayout());
-		scroller.setVisible(true);
+		button.addActionListener(this);
 		button.setVisible(true);
 		this.add(button,BorderLayout.SOUTH);
-		this.add(scroller, BorderLayout.CENTER);
 		revalidate();
 
 	}
@@ -45,6 +51,7 @@ public class SortingPanel extends JPanel {
 			System.out.println("Added File at pos: " + i);
 			add(tempModel.get(i), mp3readingData);
 		}
+		files= (ArrayList<File>) mp3readingData.clone();
 		//creating a List of Lists representing the cut Filenames
 		for (File f : mp3readingData) {
 			String path = f.getAbsolutePath();
@@ -90,10 +97,14 @@ public class SortingPanel extends JPanel {
 				}
 			}
 		}
-		
 		System.out.println("Datalength: "+data.size()+"|| datasublength: "+data.elementAt(0).size()+"|| namelength: "+names.size());
 		dataTable=new JTable(data,names);
+		System.out.println(dataTable.getRowHeight());
 		scroller= new JScrollPane(dataTable);
+		dataTable.getTableHeader().setVisible(false);
+		scroller.setVisible(true);
+		this.add(scroller);
+		revalidate();
 		ComponentStorage.MAIN_FRAME.pack();
 	}
 
@@ -107,5 +118,22 @@ public class SortingPanel extends JPanel {
 			mp3Data.add(file);
 		}
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		 DefaultTableModel names = (DefaultTableModel) this.dataTable.getModel();
+		 System.out.println(names.getRowCount()+"  "+names.getColumnCount());
+		for(int i = 0; i< names.getRowCount();i++){
+			String name = new String("");
+			for(int j =0;j<names.getColumnCount()-1;j++){
+				name +=names.getValueAt(i, j);
+			}
+			try{
+				FileUtils.copyFile(files.get(i), new File(ComponentStorage.MAIN_FRAME.path+File.separator+"AudiobookTest"+File.separator+name+".mp3"));
+			}catch(IOException e1){e1.printStackTrace();}
+			//Files.copy(files.get(i), new File(ComponentStorage.MAIN_FRAME.path+File.separator+name+".mp3"),StandardCopyOption.COPY_ATTRIBUTES);
+		}
 	}
 }
