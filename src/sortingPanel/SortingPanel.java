@@ -29,6 +29,7 @@ public class SortingPanel extends JPanel implements ActionListener {
 	public ArrayList<File> files = new ArrayList<>();
 
 	public SortingPanel() {
+		//init
 		super();
 		this.setLayout(new BorderLayout());
 		button.addActionListener(this);
@@ -97,7 +98,9 @@ public class SortingPanel extends JPanel implements ActionListener {
 				}
 			}
 		}
-		System.out.println("Datalength: "+data.size()+"|| datasublength: "+data.elementAt(0).size()+"|| namelength: "+names.size());
+		
+		//System.out.println("Datalength: "+data.size()+"|| datasublength: "+data.elementAt(0).size()+"|| namelength: "+names.size());
+		//Visual implementation
 		dataTable=new JTable(data,names);
 		System.out.println(dataTable.getRowHeight());
 		scroller= new JScrollPane(dataTable);
@@ -108,13 +111,15 @@ public class SortingPanel extends JPanel implements ActionListener {
 		ComponentStorage.MAIN_FRAME.pack();
 	}
 
+	//recursice add function putting MP3-Files in the List
 	private void add(File file, ArrayList<File> mp3Data) {
 		if (file.isDirectory()) {
+			//addinmg subfiles of the Folder to the List
 			for (File f : file.listFiles()) {
 				add(f, mp3Data);
 			}
-		} else if (file.getAbsolutePath().contains(".mp3")
-				|| file.getAbsolutePath().contains(".wav")) {
+			//adding file to the List
+		} else if (file.getAbsolutePath().contains(".mp3")) {
 			mp3Data.add(file);
 		}
 
@@ -122,18 +127,22 @@ public class SortingPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		//On Buttonactivation copy Files
 
 		 DefaultTableModel names = (DefaultTableModel) this.dataTable.getModel();
 		 System.out.println(names.getRowCount()+"  "+names.getColumnCount());
 		for(int i = 0; i< names.getRowCount();i++){
+			//assemble the String refferiing to the name of the file
 			String name = new String("");
 			for(int j =0;j<names.getColumnCount()-1;j++){
 				name +=names.getValueAt(i, j);
 			}
+			//copying file
 			try{
 				FileUtils.copyFile(files.get(i), new File(ComponentStorage.MAIN_FRAME.path+File.separator+"AudiobookTest"+File.separator+name+".mp3"));
-			}catch(IOException e1){e1.printStackTrace();}
-			//Files.copy(files.get(i), new File(ComponentStorage.MAIN_FRAME.path+File.separator+name+".mp3"),StandardCopyOption.COPY_ATTRIBUTES);
+			}catch(IOException e1){
+				e1.printStackTrace();}
 		}
 	}
 }
